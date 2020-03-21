@@ -8,6 +8,7 @@ export default {
 	props: ['type'],
 	components: {
 		in: () => import('@components/sign/In.vue'),
+		up: () => import('@components/sign/Up.vue'),
 	},
 };
 </script>

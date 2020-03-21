@@ -14,13 +14,17 @@
   el-button(type="primary" class="mt-2 full-width") 注册
 </template>
 <script>
+import SignService from '@/services/sign';
+
+const signService = new SignService();
+
 export default {
 	name: 'SignUp',
 	data() {
 		return {
 			confirm: true,
 			verifyed: false,
-			user: {
+			sign: {
 				country_code: 86,
 				mobile_num: '',
 				state: 2,
@@ -35,6 +39,13 @@ export default {
 				geetest_seccode: '',
 			},
 		};
+	},
+	async mounted() {
+		const data = await signService.geetest();
+		console.log(data);
+	},
+	created() {
+		this.geetest = require('@/utils/gt');
 	},
 };
 </script>

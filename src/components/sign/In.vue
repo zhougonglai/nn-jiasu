@@ -37,6 +37,5 @@ export default {
 			await signService.login(this.sign);
 		},
 	},
-	mounted() {},
 };
 </script>

@@ -6,10 +6,14 @@ export default class SignService {
 	}
 
 	async login(sign) {
-		await this.request.post('api/login', sign);
+		return await this.request.post('api/login', sign);
 	}
 
 	async register(sign) {
-		await this.request.post('api/register', sign);
+		return await this.request.post('api/register', sign);
+	}
+
+	async geetest() {
+		return await this.request.post('tools/captcha/geetest/config');
 	}
 }
