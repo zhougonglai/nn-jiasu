@@ -2,9 +2,7 @@ const pkg = require('./package');
 const webpack = require('webpack');
 const path = require('path');
 
-const isProd = () => {
-	return process.env.NODE_ENV === 'production';
-};
+const isProd = () => process.env.NODE_ENV === 'production';
 
 const resolve = dir => {
 	return path.join(__dirname, './', dir);
@@ -22,14 +20,8 @@ if (isProd()) {
 }
 
 module.exports = {
-	transpileDependencies: ['vuetify'],
-
 	devServer: {
-		proxy: {
-			'/baseUrl': {
-				target: 'https://yuewanapi.nn.com/',
-			},
-		},
+		proxy: 'http://dev-api-box.nn.com/',
 	},
 
 	// css相关配置
