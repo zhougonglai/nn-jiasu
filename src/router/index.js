@@ -15,12 +15,19 @@ const routes = [
 				component: () =>
 					import(/* webpackChunkName: 'page.home' */ '@pages/Home.vue'),
 			},
+		],
+	},
+	{
+		path: '/sign',
+		component: () =>
+			import(/* webpackChunkName: 'layout.Sign' */ '@layouts/Sign.vue'),
+		children: [
 			{
-				path: 'sign/:type',
-				name: 'Sign',
+				path: ':type',
 				props: true,
+				name: 'Sign',
 				component: () =>
-					import(/* webpackChunkName: 'page.Sign' */ '@pages/Sign.vue'),
+					import(/* webpackChunkName: 'page.sign' */ '@pages/Sign.vue'),
 			},
 		],
 	},

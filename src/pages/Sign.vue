@@ -1,3 +1,9 @@
 <template lang="pug">
-  #sign sign
+  #sign-form sign-form
 </template>
+<script>
+export default {
+	name: 'Sign',
+	props: ['type'],
+};
+</script>
