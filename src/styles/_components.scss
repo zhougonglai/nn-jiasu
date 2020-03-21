@@ -1,0 +1,28 @@
+.app {
+	&-btn {
+		padding: 0 16px;
+		cursor: pointer;
+		border: 1px solid #666;
+		font-size: 0.875rem;
+		font-weight: 500;
+		display: inline-flex;
+		outline: 0;
+		user-select: none;
+		vertical-align: middle;
+		white-space: nowrap;
+		height: 36px;
+		min-width: 64px;
+		&.dark {
+			color: #bbb;
+			border-color: #666;
+		}
+		&.rounded {
+			border-radius: 32px;
+		}
+
+		&:hover {
+			color: var(--v-primary-base);
+			border-color: var(--v-primary-base);
+		}
+	}
+}
