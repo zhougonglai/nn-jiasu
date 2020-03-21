@@ -1,9 +1,17 @@
 <template lang="pug">
-  #sign-form sign-form
+keep-alive
+	component(:is="type")
 </template>
 <script>
 export default {
 	name: 'Sign',
 	props: ['type'],
+	components: {
+		in: () => import('@components/sign/In.vue'),
+	},
 };
 </script>
+<style lang="scss" scoped>
+#sign-form {
+}
+</style>

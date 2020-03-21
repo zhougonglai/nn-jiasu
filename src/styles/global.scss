@@ -1,6 +1,16 @@
 :root {
-	--v-primary-rgb: 255, 211, 62;
+	--primary-rgb: 255, 211, 62;
+	--primary: #fcca3c;
 }
+
+$n: 10px;
+$primary: #fcca3c;
+$primary-rgb: 255, 211, 60;
+$primary-hover: #fdd563;
+$primary-font-color: #7a491e;
+$primary-linear-from: #ffd22e;
+$primary-linear-to: #f8c04f;
+$form-border-color: #464646;
 
 @import './reset';
 @import './help';

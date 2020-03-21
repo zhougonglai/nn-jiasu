@@ -1,0 +1,15 @@
+/* 改变主题色变量 */
+$--color-primary: #fcca3c;
+$--button-primary-font-color: #7a491e;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+/* reset */
+
+$--checkbox-background-color: transparent;
+$--checkbox-checked-background-color: transparent;
+$--checkbox-checked-icon-color: #fcca3c;
+$--checkbox-input-border: 1px solid #fcca3c;
+
+@import '~element-ui/packages/theme-chalk/src/index';

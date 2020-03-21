@@ -1,7 +1,10 @@
 <template lang="pug">
-  #sign
-    .box close
-      router-view
+#sign
+	.box
+		i.el-icon-close.top.right.abs
+		div.logo.mb-2
+			img#logo(src="../assets/img/logo.png" srcset="../assets/img/logo@2x.png 2x" alt="logo")
+		router-view
 </template>
 <script>
 export default {
@@ -61,8 +64,8 @@ export default {
 		svg,
 		img {
 			user-select: none;
-			width: 55px;
-			height: 55px;
+			width: 71px;
+			height: 80px;
 		}
 		svg {
 			background-color: var(--primary);

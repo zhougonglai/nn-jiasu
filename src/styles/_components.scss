@@ -1,28 +1,317 @@
-.app {
-	&-btn {
-		padding: 0 16px;
+button {
+	&.btn {
+		border-radius: 4px;
+		padding: 0 14px;
+		font-size: 16px;
+		line-height: 2.4;
 		cursor: pointer;
-		border: 1px solid #666;
-		font-size: 0.875rem;
-		font-weight: 500;
-		display: inline-flex;
-		outline: 0;
-		user-select: none;
-		vertical-align: middle;
-		white-space: nowrap;
-		height: 36px;
-		min-width: 64px;
-		&.dark {
-			color: #bbb;
-			border-color: #666;
-		}
-		&.rounded {
-			border-radius: 32px;
+		color: $primary-font-color;
+		outline: none;
+		border: none;
+		box-shadow: 0 0 0 0 rgba($primary, 0.08), 0 0 0 0 rgba($primary, 0.08),
+			0 0 0 0 rgba($primary, 0.2);
+		transition: box-shadow 0.25s linear;
+		will-change: box-shadow;
+		width: fit-content;
+		background-image: linear-gradient(
+			to right,
+			$primary-linear-from,
+			$primary-linear-to
+		);
+
+		&.block {
+			width: -webkit-fill-available;
 		}
 
+		&.primary {
+			background-color: $primary;
+			&:hover {
+				background-color: $primary-hover;
+			}
+		}
 		&:hover {
-			color: var(--v-primary-base);
-			border-color: var(--v-primary-base);
+			box-shadow: 0 1px 4px 2px rgba($primary, 0.08),
+				0 0 8px 4px rgba($primary, 0.08), 0 0 12px 4px rgba($primary, 0.2);
+		}
+	}
+}
+
+form.form {
+	width: -webkit-fill-available;
+	min-width: 220px;
+	display: flex;
+	flex-direction: column;
+	&.border {
+		border: 1px solid $form-border-color;
+		border-radius: 4px;
+	}
+}
+
+.form-contrl {
+	display: flex;
+	align-items: center;
+	padding: 4px;
+	background-color: #2d2828;
+	position: relative;
+	&:focus-within {
+		box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.4) inset;
+	}
+	&:hover {
+		.form-clear {
+			display: block;
+		}
+	}
+	&:first-of-type {
+		border-radius: 4px 4px 0 0;
+	}
+	&:last-of-type {
+		border-radius: 0 0 4px 4px;
+	}
+	& + .form-contrl {
+		border-top: 1px solid $form-border-color;
+	}
+
+	&.border {
+		border: 1px solid $form-border-color;
+	}
+	i.form-icon {
+		padding: $n;
+		color: lightgray;
+	}
+	svg.form-icon {
+		width: 20px;
+		height: 20px;
+		margin: 0 $n;
+	}
+	input {
+		&.form-input {
+			width: fit-content;
+			height: inherit;
+			font-size: large;
+			line-height: 1.4;
+			flex: 1;
+			background-color: transparent;
+			border: none;
+			outline: none;
+			color: $primary;
+			caret-color: $primary;
+			font-size: large;
+		}
+	}
+	.form-clear {
+		color: lightgray;
+		position: absolute;
+		right: 12px;
+		cursor: pointer;
+		display: none;
+		&:hover {
+			color: whitesmoke;
+		}
+	}
+	// slot="pre"
+	.form-input__pre {
+		margin-right: 4px;
+		color: lightgray;
+		cursor: pointer;
+		min-width: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.dropdown-link {
+			flex: 1;
+		}
+	}
+
+	.verify {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		backdrop-filter: blur(5px);
+		line-height: 40px;
+		color: lightgray;
+		font-size: small;
+	}
+}
+
+.bubble {
+	width: 12px;
+	height: 12px;
+	background-color: var(--primary);
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0 16px;
+	position: relative;
+	&::before {
+		content: '';
+		width: 24px;
+		height: 24px;
+		background-color: rgba(var(--primary-rgb), 0.2);
+		border-radius: 50%;
+		position: absolute;
+		left: -6px;
+		top: -6px;
+		animation: scale 0.6s linear infinite alternate;
+	}
+}
+
+.tabs {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid darkgray;
+	overflow: hidden;
+	border-radius: 4px;
+	.tab-bars {
+		display: flex;
+		.tab-bar {
+			flex: 1 0 72px;
+			padding: $n;
+			color: gray;
+			cursor: pointer;
+			border-bottom: 1px solid darkgray;
+			&.active {
+				border-right: 1px solid darkgray;
+				border-left: 1px solid darkgray;
+				border-bottom: none;
+				&:first-of-type {
+					border-left: none;
+				}
+				&:last-of-type {
+					border-right: none;
+				}
+			}
+		}
+	}
+	.tab-panes {
+		display: flex;
+		.tab-pane {
+			width: 100%;
+		}
+	}
+}
+
+.dropdown {
+	&-link {
+		cursor: pointer;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		user-select: none;
+	}
+	&-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		line-height: 2;
+	}
+	&-menus {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid #464646;
+		background-color: #2d2828;
+		border-radius: 4px;
+		max-height: 240px;
+		width: max-content;
+		z-index: 2;
+		&::before,
+		&::after {
+			position: absolute;
+			content: '';
+			left: calc(50% - 8px);
+		}
+		&.top {
+			bottom: calc(100% + 8px);
+			&::before,
+			&::after {
+				border-left: 8px transparent dashed;
+				border-right: 8px transparent dashed;
+				border-bottom: 8px transparent dashed;
+			}
+			&:before {
+				bottom: -17px;
+				border-top: 8px #464646 solid;
+			}
+			&::after {
+				bottom: -16px;
+				border-top: 8px #2d2828 solid;
+			}
+		}
+		&.bottom {
+			top: calc(100% + 8px);
+			&::before,
+			&::after {
+				border-left: 8px transparent dashed;
+				border-right: 8px transparent dashed;
+				border-top: 8px transparent dashed;
+			}
+			&:before {
+				top: -17px;
+				border-bottom: 8px #464646 solid;
+			}
+			&::after {
+				top: -16px;
+				border-bottom: 8px #2d2828 solid;
+			}
+			.form-contrl {
+				&:first-of-type {
+					border-bottom: 1px solid #464646;
+				}
+			}
+		}
+		&.small {
+			.dropdown-menu {
+				line-height: 24px;
+			}
+			input {
+				line-height: 29px;
+				&::-webkit-input-placeholder {
+					color: lightgrey;
+					font-size: small;
+				}
+			}
+		}
+	}
+	&-content {
+		flex: 1;
+		overflow-y: auto;
+	}
+	&-menu {
+		min-width: 110px;
+		width: 100%;
+		line-height: 32px;
+		padding: 0 $n;
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+		&-icon {
+		}
+	}
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	background-color: gray;
+}
+
+.list {
+	&-title {
+		text-align: start;
+		text-indent: $n;
+	}
+	&-item {
+		width: 100%;
+		line-height: 32px;
+		color: white;
+		&.hover:hover {
+			background-color: rgba(0, 0, 0, 0.4);
 		}
 	}
 }
