@@ -6,13 +6,23 @@ Vue.use(VueRouter);
 const routes = [
 	{
 		path: '/',
-		name: 'Home',
-		component: () => import(/* webpackChunkName: "home" */ '@pages/Home.vue'),
-	},
-	{
-		path: '/about',
-		name: 'About',
-		component: () => import(/* webpackChunkName: "about" */ '@pages/About.vue'),
+		component: () =>
+			import(/* webpackChunkName: 'layout.default' */ '@layouts/default.vue'),
+		children: [
+			{
+				path: '',
+				name: 'Home',
+				component: () =>
+					import(/* webpackChunkName: 'page.home' */ '@pages/Home.vue'),
+			},
+			{
+				path: 'sign/:type',
+				name: 'Sign',
+				props: true,
+				component: () =>
+					import(/* webpackChunkName: 'page.Sign' */ '@pages/Sign.vue'),
+			},
+		],
 	},
 ];
 
