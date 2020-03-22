@@ -41,7 +41,7 @@ export default {
 		};
 	},
 	async mounted() {
-		const data = await signService.geetest();
+		const { data } = await signService.geetest();
 		console.log(data);
 	},
 	created() {
