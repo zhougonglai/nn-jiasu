@@ -74,6 +74,11 @@ form.form {
 	&.border {
 		border: 1px solid $form-border-color;
 	}
+	&.with-after {
+		input {
+			overflow: hidden;
+		}
+	}
 	i.form-icon {
 		padding: $n;
 		color: lightgray;
