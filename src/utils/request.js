@@ -44,7 +44,7 @@ export default class Request {
 
 	post(path, body) {
 		const { signal } = this.controller;
-		// const { TIMESTAMP, NONCE, SIGN } = createSign(JSON.stringify(body));
+		const { TIMESTAMP, NONCE, SIGN } = createSign(JSON.stringify(body));
 		return fetch(this.baseUrl + path, {
 			method: 'POST',
 			body: JSON.stringify(body),
@@ -52,9 +52,9 @@ export default class Request {
 			redirect: 'follow',
 			headers: {
 				'Content-Type': 'application/json', // application/x-www-form-urlencoded
-				// 'X-TIMESTAMP': TIMESTAMP,
-				// 'X-NONCE': NONCE,
-				// 'X-SIGN': SIGN,
+				'X-TIMESTAMP': TIMESTAMP,
+				'X-NONCE': NONCE,
+				'X-SIGN': SIGN,
 			},
 			signal,
 		}).then(this.check);
