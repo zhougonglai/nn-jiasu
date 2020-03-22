@@ -36,9 +36,6 @@ const actions = {
 			`https://jiasu.nn.com/geoip2/country_codes.json?${new URLSearchParams({
 				lang: navigator.language,
 			}).toString()}`,
-			{
-				method: 'GET',
-			},
 		).then(res => res.json());
 		commit(types('COUNTRY_CODE'), data);
 		return data;

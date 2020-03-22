@@ -7,8 +7,16 @@
 		router-view
 </template>
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	name: 'SignLayout',
+	methods: {
+		...mapActions('sign', ['getCountryCodes']),
+	},
+	created() {
+		this.getCountryCodes();
+	},
 };
 </script>
 <style lang="scss" scoped>
