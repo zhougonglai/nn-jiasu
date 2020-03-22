@@ -9,6 +9,7 @@ export default {
 	components: {
 		in: () => import('@components/sign/In.vue'),
 		up: () => import('@components/sign/Up.vue'),
+		forget_password: () => import('@components/sign/ForgetPassword.vue'),
 	},
 };
 </script>

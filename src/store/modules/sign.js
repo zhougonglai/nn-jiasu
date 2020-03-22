@@ -1,4 +1,5 @@
 import { unionBy } from 'lodash';
+import Request from '@utils/request';
 
 const types = chat => Symbol(`SIGN_${chat}`).toString();
 
@@ -32,11 +33,10 @@ const getters = {
 
 const actions = {
 	async getCountryCodes({ commit }) {
-		const { data } = await fetch(
-			`https://jiasu.nn.com/geoip2/country_codes.json?${new URLSearchParams({
-				lang: navigator.language,
-			}).toString()}`,
-		).then(res => res.json());
+		const request = new Request('https://jiasu.nn.com/');
+		const { data } = await request.get('geoip2/country_codes.json', {
+			lang: navigator.language,
+		});
 		commit(types('COUNTRY_CODE'), data);
 		return data;
 	},

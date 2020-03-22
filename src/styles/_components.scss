@@ -36,6 +36,17 @@ button {
 	}
 }
 
+.tap {
+	color: lightgray;
+	cursor: pointer;
+	font-size: small;
+	line-height: 2.2;
+	text-decoration: none;
+	&:hover {
+		color: whitesmoke;
+	}
+}
+
 form.form {
 	width: -webkit-fill-available;
 	min-width: 220px;
@@ -74,7 +85,8 @@ form.form {
 	&.border {
 		border: 1px solid $form-border-color;
 	}
-	&.with-after {
+	&.with-after,
+	&.with-before {
 		input {
 			overflow: hidden;
 		}
@@ -113,8 +125,7 @@ form.form {
 			color: whitesmoke;
 		}
 	}
-	// slot="pre"
-	.form-input__pre {
+	&__before {
 		margin-right: 4px;
 		color: lightgray;
 		cursor: pointer;
@@ -122,9 +133,6 @@ form.form {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		.dropdown-link {
-			flex: 1;
-		}
 	}
 
 	.verify {
@@ -204,6 +212,7 @@ form.form {
 		justify-content: center;
 		align-items: center;
 		user-select: none;
+		color: lightgray;
 	}
 	&-container {
 		display: flex;
