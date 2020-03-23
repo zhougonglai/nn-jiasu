@@ -4,6 +4,7 @@
 		.form-contrl
 			label(for="phone")
 				svg-icon.form-icon(name="phone")
+			country-code.form-contrl__before(v-model="sign.country_code")
 			input#phone.form-input(type="tel" placeholder="手机号" v-model.number.trim="sign.mobile_num")
 			i.form-clear.el-icon-error(@click="sign.mobile_num = ''")
 		.form-contrl
@@ -49,6 +50,9 @@ export default {
 			},
 			dropdown: 0,
 		};
+	},
+	components: {
+		CountryCode: () => import('@components/sign/CountryCode.vue'),
 	},
 	methods: {
 		showDropdown() {
