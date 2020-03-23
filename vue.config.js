@@ -16,12 +16,20 @@ if (isProd()) {
 			pkg.version
 		} and build time ${new Date().toString()}`,
 	});
-	plugins.push(banner, prerender);
+	plugins.push(banner);
 }
 
 module.exports = {
 	devServer: {
-		proxy: 'http://dev-api-box.nn.com/',
+		proxy: {
+			'/api/box': {
+				target: 'http://dev-api-box.nn.com/',
+				pathRewrite: { '^/api/box': '' },
+			},
+			'/api/v2': {
+				target: 'http://test-svr.nn.com',
+			},
+		},
 	},
 
 	// css相关配置
