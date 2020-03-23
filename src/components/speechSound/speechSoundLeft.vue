@@ -1,42 +1,22 @@
 <template>
   <div class="speech-sound-left-wrap">
-    <div class="speech-sound-catalogue">
-      <div class="speech-sound-title">
+    <div class="speech-sound-catalogue" style="margin-top:13px;">
+      <div class="speech-sound-title" >
         <img :src="wodepindao" />
         <span>我的频道</span>
       </div>
     </div>
-    <div class="speech-sound-catalogue">
+
+    <div :class="['speech-sound-catalogue',{'speech-sound-catalogue-active':item.choosen}]" v-for="(item,index) in categoryList" :key="index" @click="chooseSpeechSoundCategory(item)">
       <div class="speech-sound-title">
-        <img :src="remenpindao" />
-        <span>热门频道</span>
-      </div>
-    </div>
-    <div class="speech-sound-catalogue">
-      <div class="speech-sound-title">
-        <img :src="youxipindao" />
-        <span>游戏频道</span>
+        <img :src="item.icon" />
+        <span>{{item.name}}</span>
       </div>
       <div class="speech-channel-list">
-        <div v-for="(item,index) in gameChannelList" :key="index" class="speech-channel-item">
+        <div v-for="(item2,index2) in item.tags" :key="index2" class="speech-channel-item">
           <span
-            :class="{'channel-choosen':item.choosen}"
-            @click="speechGameChannelChoose(item)"
-          >{{item.name}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="speech-sound-catalogue">
-      <div class="speech-sound-title">
-        <img :src="yulehudong" />
-        <span>娱乐互动</span>
-      </div>
-      <div class="speech-channel-list">
-        <div v-for="(item,index) in amusementList" :key="index" class="speech-channel-item">
-          <span
-            :class="{'channel-choosen':item.choosen}"
-            @click="speechAmusementChannelChoose(item)"
-          >{{item.name}}</span>
+            :class="{'channel-choosen':item.choosen && index2 === 0}"
+          >{{item2.name}}</span>
         </div>
       </div>
     </div>
@@ -44,6 +24,9 @@
 </template>
 
 <script>
+import SpeechSoundService from "@/services/speechSound";
+
+const speechSoundService = new SpeechSoundService();
 export default {
   name: "speechSoundLeft",
   data() {
@@ -56,46 +39,33 @@ export default {
       youxipindao: require("@/assets/img/speechSound/youxipindao.png"),
       //娱乐互动
       yulehudong: require("@/assets/img/speechSound/yulehudong.png"),
-      // 游戏频道列表
-      gameChannelList: [
-        { name: "绝地求生", choosen: true },
-        { name: "英雄联盟", choosen: false },
-        { name: "云顶之弈", choosen: false },
-        { name: "王者荣耀", choosen: false },
-        { name: "王者荣耀", choosen: false },
-        { name: "穿越火线", choosen: false },
-        { name: "主机游戏", choosen: false },
-        { name: "其他游戏", choosen: false }
-      ],
-      // 娱乐互动列表
-      amusementList: [
-        { name: "声优聊天", choosen: false },
-        { name: "FM电台", choosen: false },
-        { name: "互动交友", choosen: false },
-        { name: "音乐世界", choosen: false }
-      ]
+      // 频道列表
+      categoryList:[],
     };
   },
   methods: {
-    // 点击游戏频道
-    speechGameChannelChoose(item) {
-      this.gameChannelList.map(e => {
-        e.choosen = false;
-      });
-      this.amusementList.map(e => {
-        e.choosen = false;
-      });
-      item.choosen = true;
+    // 选择分类
+    chooseSpeechSoundCategory(item){
+      this.deleteChoosen(item)
+      this.$emit('chooseCateGory',item.id)
     },
-    // 点击娱乐互动
-    speechAmusementChannelChoose(item) {
-      this.gameChannelList.map(e => {
-        e.choosen = false;
+    // 切换选中效果
+    deleteChoosen(item){
+      this.categoryList.map(e=>{
+        e.choosen = false
+      })
+      item.choosen = true
+    }
+  },
+  async mounted() {
+    let { code, data } = await speechSoundService.getCategoryList();
+    console.log(code, data);
+    if (code == 0) {
+      this.categoryList = data.map(e=>{
+        e.choosen = false
+        return e
       });
-      this.amusementList.map(e => {
-        e.choosen = false;
-      });
-      item.choosen = true;
+      this.categoryList[0].choosen = true
     }
   }
 };
@@ -106,9 +76,9 @@ export default {
   display: flex;
   flex-direction: column;
   .speech-sound-catalogue {
+    padding:12px 0;
     .speech-sound-title {
       margin-left: 10px;
-      margin-top: 25px;
       cursor: pointer;
       display: flex;
       img {
@@ -133,9 +103,9 @@ export default {
       margin-left: 18px;
       .speech-channel-item {
         width: 80px;
-        margin-top: 10px;
+        margin-top: 8px;
         text-align: center;
-        margin-right:5px;
+        margin-right: 5px;
         span {
           display: inline-block;
           font-size: 14px;
@@ -156,5 +126,14 @@ export default {
       }
     }
   }
+  // .speech-sound-catalogue:hover{
+  //   // background-color: rgba(248,192,79,1);
+  //   background-color: rgb(235, 233, 233);
+
+  // }
+  // .speech-sound-catalogue-active{
+  //   // background-color: rgba(248,192,79,1);
+  //      background-color: rgb(235, 233, 233);
+  // }
 }
 </style>

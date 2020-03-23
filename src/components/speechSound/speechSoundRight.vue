@@ -14,17 +14,20 @@
         v-for="(item,index) in speechSoundChannelList"
         :key="index"
       >
-        <img :src="item.bannel" alt class="speech-sound-right-content-item-img" />
+        <img :src="item.avatar" alt class="speech-sound-right-content-item-img" />
         <div class="speech-sound-right-content-item-detail">
-          <span class="sl-2 speech-sound-right-content-item-title">{{item.title}}</span>
+          <span class="sl-2 speech-sound-right-content-item-title">{{item.name}}</span>
           <div class="speech-sound-right-content-item-num">
-            <img :src="ic_id" alt style="width:14px;height:14px"/>
-            <span>{{item.id}}</span>
-            <img :src="ic_person" alt style="width:14px;height:14px;margin-left:25px"/>
-            <span>{{item.viewersNumber}}</span>
+            <img :src="ic_id" alt style="width:14px;height:14px" />
+            <span>{{item.channelid}}</span>
+            <img :src="ic_person" alt style="width:14px;height:14px;margin-left:25px" />
+            <span>{{item.hots}}</span>
           </div>
           <div class="speech-sound-right-content-item-classify">
-            <span v-for="(item2,index2) in item.classification" :key="index2">{{item2.name}}</span>
+            <span v-for="(item2,index2) in item.tags.slice(0,3)" :key="index2">
+              <img :src="item2.icon" alt />
+              {{item2.name}}
+            </span>
           </div>
         </div>
       </div>
@@ -33,6 +36,9 @@
 </template>
 
 <script>
+import SpeechSoundService from "@/services/speechSound";
+
+const speechSoundService = new SpeechSoundService();
 export default {
   name: "speechSoundRight",
   data() {
@@ -40,213 +46,49 @@ export default {
       ic_id: require("@/assets/img/speechSound/ic_id.png"),
       ic_person: require("@/assets/img/speechSound/ic_person.png"),
       speechSoundRightTitleList: [
-        { name: "综合排序", choosen: true },
-        { name: "人气频道", choosen: false },
-        { name: "最新频道", choosen: false }
+        { name: "综合排序", choosen: true,sort:2},
+        { name: "人气频道", choosen: false,sort:1 },
+        { name: "最新频道", choosen: false,sort:2 }
       ],
-      speechSoundChannelList: [
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        },
-        {
-          title:
-            "顶级FPS主播【PIGFF】(白给)牛逼开黑黑牛逼开牛逼开黑黑牛逼开牛逼开黑黑牛逼开",
-          bannel: require("@/assets/img/speechSound/channelTitle.png"),
-          id: "2882056",
-          viewersNumber: "288030",
-          classification: [
-            { name: "绝地求生", img: "" },
-            { name: "英雄联盟", img: "" },
-            { name: "PUBG", img: "" }
-          ]
-        }
-      ]
+      speechSoundChannelList: [],
+      category:0
     };
   },
   methods: {
+    // 切换左侧分类
+    chooseCategory(id){
+      this.category = id
+      this.speechSoundRightTitleList.map(e => {
+        e.choosen = false;
+      });
+      this.speechSoundRightTitleList[0].choosen = true
+      this.getALLChannel(2);
+    },
+    // 选择排序
     speechSoundRightItemChoosen(item) {
       this.speechSoundRightTitleList.map(e => {
         e.choosen = false;
       });
       item.choosen = true;
+      this.getALLChannel(item.sort)
+    },
+    // 获取列表
+    async getALLChannel(num) {
+      let { code, data } = await speechSoundService.getChannelList(this.category,num);
+      if (code == 0) {
+        this.speechSoundChannelList = data.list.map(e => {
+          if (e.special_channel_no) {
+            e.channelid = e.special_channel_no;
+          } else {
+            e.channelid = e.channel_no;
+          }
+          return e;
+        });
+      }
     }
+  },
+  mounted() {
+    this.getALLChannel(2);
   }
 };
 </script>
@@ -254,10 +96,13 @@ export default {
 <style lang="scss" scoped>
 .speech-sound-right-wrap {
   width: 100%;
-  background-color: rgb(235, 235, 235);
+  background:url('../../assets/img/speechSound/homeBackground.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   .speech-sound-right-title {
     display: flex;
     margin-top: 25px;
+    margin-bottom:11px;
     span {
       width: 75px;
       height: 26px;
@@ -283,7 +128,7 @@ export default {
     height: 561px;
     flex-wrap: wrap;
     overflow-y: auto;
-    padding-top: 11px;
+    // padding-top: 11px;
     .speech-sound-right-content-item {
       width: 300px;
       height: 100px;
@@ -317,7 +162,7 @@ export default {
         .speech-sound-right-content-item-num {
           width: 180px;
           margin-top: 10px;
-          display:flex;
+          display: flex;
           span {
             width: 55px;
             height: 14px;
@@ -326,23 +171,29 @@ export default {
             line-height: 14px;
             color: rgba(102, 102, 102, 1);
             opacity: 1;
-            margin-left:5px;
+            margin-left: 5px;
           }
         }
         .speech-sound-right-content-item-classify {
           width: 200px;
-          margin-top: 5px;
-          height:12px;
+          margin-top: 10px;
+          height: 12px;
           line-height: 12px;
+          display: flex;
           span {
-            margin-left: 25px;
-            width: 32px;
+            margin-left: 11px;
+            // width: 32px;
             height: 12px;
             font-size: 8px;
             font-family: PingFangSC-Medium;
             line-height: 12px;
             color: rgba(138, 144, 160, 1);
             opacity: 1;
+            display: flex;
+            img {
+              width: 14px;
+              height: 14px;
+            }
           }
         }
       }
