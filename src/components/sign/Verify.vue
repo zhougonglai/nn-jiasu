@@ -1,5 +1,6 @@
 <template lang="pug">
 #verify
+	small.error(v-if="error.status" v-text="error.msg")
 	form.form.border(novalidate)
 		.form-contrl
 			label(for="phone")
@@ -10,7 +11,8 @@
 			label(for="smscode")
 				svg-icon.form-icon(name="safe")
 			input#smscode.form-input(type="tel" autocomplete="off" placeholder="验证码" v-model.trim="sign.smscode")
-			el-button.mr-1(type="text" size="mini" @click="sendSmscode") 发送验证码
+			el-button.mr-1(type="text" size="mini" @click="sendContrl" :disabled="!!sendCodeContrl.timer")
+				| {{ sendCodeContrl.timer ? `(${sendCodeContrl.time})` : '发送验证码' }}
 			.verify.pointer(v-if="!verifyed" @click="verify")
 				.bubble
 				| 点击按钮进行验证
@@ -44,6 +46,10 @@ export default {
 		return {
 			dropdown: 0,
 			verifyed: false,
+			error: {
+				status: false,
+				msg: '',
+			},
 			sendCodeContrl: {
 				sending: false,
 				time: 60,
@@ -75,6 +81,19 @@ export default {
 				this.error.status = code;
 			} else {
 				this.sign.smscode_key = data.smscode_key;
+			}
+		},
+		sendContrl() {
+			if (!this.sendCodeContrl.timer) {
+				this.sendCodeContrl.timer = setInterval(() => {
+					if (this.sendCodeContrl.time > 0) {
+						this.sendCodeContrl.time -= 1;
+					} else {
+						clearInterval(this.sendCodeContrl.timer);
+						this.sendCodeContrl.timer = 0;
+					}
+				}, 1000);
+				this.sendSmscode();
 			}
 		},
 		verify() {
@@ -128,3 +147,18 @@ export default {
 	},
 };
 </script>
+<style lang="scss" scoped>
+#verify {
+	position: relative;
+}
+small {
+	line-height: 20px;
+	&.error {
+		color: red;
+		position: absolute;
+		left: 50%;
+		bottom: 100%;
+		transform: translateX(-50%);
+	}
+}
+</style>

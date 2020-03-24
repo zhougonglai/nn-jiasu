@@ -12,7 +12,8 @@
 			label(for="smscode")
 				svg-icon.form-icon(name="safe")
 			input#smscode.form-input(type="tel" autocomplete="off" placeholder="验证码" v-model.trim="sign.smscode")
-			el-button.mr-1(type="text" size="mini" @click="sendSmscode") 发送验证码
+			el-button.mr-1(type="text" size="mini" @click="sendContrl" :disabled="!!sendCodeContrl.timer")
+				| {{ sendCodeContrl.timer ? `(${sendCodeContrl.time})` : '发送验证码' }}
 			.verify.pointer(v-if="!verifyed" @click="verify")
 				.bubble
 				| 点击按钮进行验证
@@ -31,7 +32,7 @@
 </template>
 <script>
 import SignService from '@/services/sign';
-
+import md5 from 'js-md5';
 const signService = new SignService();
 
 export default {
@@ -43,6 +44,11 @@ export default {
 			error: {
 				status: false,
 				msg: '',
+			},
+			sendCodeContrl: {
+				sending: false,
+				time: 60,
+				timer: 0,
 			},
 			sign: {
 				country_code: 86,
@@ -78,6 +84,25 @@ export default {
 			} else {
 				this.sign.smscode_key = data.smscode_key;
 			}
+		},
+		sendContrl() {
+			if (!this.sendCodeContrl.timer) {
+				this.sendCodeContrl.timer = setInterval(() => {
+					if (this.sendCodeContrl.time > 0) {
+						this.sendCodeContrl.time -= 1;
+					} else {
+						clearInterval(this.sendCodeContrl.timer);
+						this.sendCodeContrl.timer = 0;
+					}
+				}, 1000);
+				this.sendSmscode();
+			}
+		},
+		async register() {
+			await this.signService.register({
+				...this.sign,
+				password: md5(this.sign.password),
+			});
 		},
 	},
 	async mounted() {
