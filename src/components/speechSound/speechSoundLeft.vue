@@ -11,6 +11,11 @@
       <div class="speech-sound-title">
         <img :src="item.icon" />
         <span>{{item.name}}</span>
+         <div class="animation-wrap" v-show="item.choosen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
       <div class="speech-channel-list">
         <div v-for="(item2,index2) in item.tags" :key="index2" class="speech-channel-item">
@@ -33,12 +38,12 @@ export default {
     return {
       // 我的频道
       wodepindao: require("@/assets/img/speechSound/wodepindao.png"),
-      //热门频道
-      remenpindao: require("@/assets/img/speechSound/remenpindao.png"),
-      //游戏频道
-      youxipindao: require("@/assets/img/speechSound/youxipindao.png"),
-      //娱乐互动
-      yulehudong: require("@/assets/img/speechSound/yulehudong.png"),
+      // //热门频道
+      // remenpindao: require("@/assets/img/speechSound/remenpindao.png"),
+      // //游戏频道
+      // youxipindao: require("@/assets/img/speechSound/youxipindao.png"),
+      // //娱乐互动
+      // yulehudong: require("@/assets/img/speechSound/yulehudong.png"),
       // 频道列表
       categoryList:[],
     };
@@ -126,14 +131,41 @@ export default {
       }
     }
   }
-  // .speech-sound-catalogue:hover{
-  //   // background-color: rgba(248,192,79,1);
-  //   background-color: rgb(235, 233, 233);
+  .animation-wrap {
+    padding-left: 10px;
+    width: 22px;
+    height: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    span {
+      width: 1px;
+      margin-left:1px;
+      background-color: rgba(66,67,70,1);
+      border-radius: 2px;
+      animation: select 0ms -800ms linear infinite alternate;
+    }
+  }
+  @keyframes select {
+    0% {
+      height: 2px;
+    }
 
-  // }
-  // .speech-sound-catalogue-active{
-  //   // background-color: rgba(248,192,79,1);
-  //      background-color: rgb(235, 233, 233);
-  // }
+    100% {
+      height: 8px;
+    }
+  }
+  .animation-wrap span:nth-child(1) {
+    /* height: 4px; */
+    animation-duration: 474ms;
+  }
+  .animation-wrap span:nth-child(2) {
+    /* height: 6px; */
+    animation-duration: 433ms;
+  }
+  .animation-wrap span:nth-child(3) {
+    /* height: 8px; */
+    animation-duration: 407ms;
+  }
 }
 </style>
