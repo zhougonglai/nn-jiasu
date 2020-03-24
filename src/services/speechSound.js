@@ -13,7 +13,7 @@ export default class SpeechSoundService {
     async getChannelList(category, sort) {
         return await this.request.post('/channel/list', {
             "last_id": 0,
-            "limit": 20,
+            "limit": 21,
             "category_id": category,
             "tag_id": 0,
             "sort_type": sort
