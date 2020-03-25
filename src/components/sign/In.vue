@@ -118,10 +118,9 @@ export default {
 		},
 	},
 	async created() {
-		const cred = await navigator.credentials.get({
+		await navigator.credentials.get({
 			password: true,
 		});
-		console.log(cred);
 	},
 };
 </script>
