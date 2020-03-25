@@ -8,7 +8,7 @@ export default class SignService {
 	}
 
 	async login(sign) {
-		return await this.request.post('/api/login', sign);
+		return await this.request.post('/api/auth/login', sign);
 	}
 
 	async register(sign) {
@@ -37,7 +37,7 @@ export default class SignService {
 
 	async geetest() {
 		return await this.request
-			.post('tools/captcha/geetest/config')
+			.post('/tools/captcha/geetest/config')
 			.then(res => res.data);
 	}
 }

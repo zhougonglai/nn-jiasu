@@ -6,12 +6,12 @@
       label(for="phone")
         svg-icon.form-icon(name="phone")
       country-code.form-contrl__before(v-model="sign.country_code")
-      input#phone.form-input(type="tel" placeholder="手机号" v-model.number.trim="sign.mobile_num")
-      i.form-clear.el-icon-error(v-if="sign.mobile_num" @click="sign.mobile_num = ''")
+      input#phone.form-input(type="tel" placeholder="手机号" v-model.number.trim="sign.username")
+      i.form-clear.el-icon-error(v-if="sign.username" @click="sign.username = ''")
     .form-contrl
       label(for="pwd")
         svg-icon.form-icon(name="lock")
-      input#pwd.form-input(type="tel" placeholder="密码" v-model.trim="sign.password")
+      input#pwd.form-input(type="password" placeholder="密码" v-model.trim="sign.password")
       i.form-clear.el-icon-error(v-if="sign.password" @click="sign.password = ''")
   .flex.full-width.my-2
     el-checkbox(v-model="remember") 记住我
@@ -51,7 +51,8 @@ export default {
 			},
 			sign: {
 				country_code: 86,
-				mobile_num: '',
+				user_type: 0,
+				username: '',
 				password: '',
 			},
 			dropdown: 0,
@@ -76,15 +77,51 @@ export default {
 			this.dropdown = 0;
 		},
 		async login() {
-			const { code, msg } = await signService.login({
+			const { code, msg, data } = await signService.login({
 				...this.sign,
+				username: this.sign.username.toString(),
 				password: md5(this.sign.password),
 			});
 			if (code) {
 				this.error.msg = msg;
 				this.error.status = code;
+			} else {
+				if (this.remember) {
+					if (window.PasswordCredential) {
+						const { nickname, avatar } = data.user_info;
+						const passwordCredential = await navigator.credentials.create({
+							password: {
+								id: this.sign.username,
+								name: nickname,
+								iconURL: 'https:' + avatar,
+								password: this.sign.password,
+								country_code: this.sign.country_code,
+							},
+						});
+						navigator.credentials.store(passwordCredential);
+					}
+				}
+				if (this.$root.production) {
+					const message = {
+						operation: 'afterlogin',
+						data,
+					};
+					window.NimCefWebInstance.call('CallNativeFun', { message }, () => {
+						window.NimCefWebInstance.call('CallNativeFun', {
+							message: {
+								operation: 'close',
+							},
+						});
+					});
+				}
 			}
 		},
+	},
+	async created() {
+		const cred = await navigator.credentials.get({
+			password: true,
+		});
+		console.log(cred);
 	},
 };
 </script>

@@ -22,9 +22,9 @@ if (isProd()) {
 module.exports = {
 	devServer: {
 		proxy: {
-			'/api/box': {
-				target: 'http://dev-api-box.nn.com/',
-				pathRewrite: { '^/api/box': '' },
+			'/leigod': {
+				target: 'http://dev-api1.leigod.com',
+				pathRewrite: { '^/leigod': '' },
 			},
 			'/api/v2': {
 				target: 'http://test-svr.nn.com',
