@@ -86,10 +86,10 @@ export default {
 				this.error.msg = msg;
 				this.error.status = code;
 			} else {
-				localStorage.config = {
+				localStorage.config = JSON.stringify({
 					autologin: this.autologin,
 					remember: this.remember,
-				};
+				});
 				if (this.remember) {
 					if (window.PasswordCredential) {
 						const { nickname, avatar } = data.user_info;
@@ -103,7 +103,7 @@ export default {
 						});
 						navigator.credentials.store(passwordCredential);
 					} else {
-						localStorage.sign = this.sign;
+						localStorage.sign = JSON.stringify(this.sign);
 					}
 				}
 				if (this.$root.production) {

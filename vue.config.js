@@ -1,6 +1,7 @@
 const pkg = require('./package');
 const webpack = require('webpack');
 const path = require('path');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const isProd = () => process.env.NODE_ENV === 'production';
 
@@ -17,7 +18,8 @@ if (isProd()) {
 		} and build time ${new Date().toString()}`,
 		test: /\.m?js$/,
 	});
-	plugins.push(banner);
+	const compression = new CompressionPlugin();
+	plugins.push(banner, compression);
 }
 
 module.exports = {
