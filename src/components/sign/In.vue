@@ -160,4 +160,7 @@ small {
 		transform: translateX(-50%);
 	}
 }
+#sign-in {
+	position: relative;
+}
 </style>
