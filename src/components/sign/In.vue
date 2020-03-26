@@ -86,6 +86,10 @@ export default {
 				this.error.msg = msg;
 				this.error.status = code;
 			} else {
+				localStorage.config = {
+					autologin: this.autologin,
+					remember: this.remember,
+				};
 				if (this.remember) {
 					if (window.PasswordCredential) {
 						const { nickname, avatar } = data.user_info;
@@ -95,10 +99,11 @@ export default {
 								name: nickname,
 								iconURL: 'https:' + avatar,
 								password: this.sign.password,
-								country_code: this.sign.country_code,
 							},
 						});
 						navigator.credentials.store(passwordCredential);
+					} else {
+						localStorage.sign = this.sign;
 					}
 				}
 				if (this.$root.production) {
@@ -118,9 +123,29 @@ export default {
 		},
 	},
 	async created() {
-		await navigator.credentials.get({
-			password: true,
-		});
+		if (localStorage.config) {
+			const { autologin, remember } = JSON.parse(localStorage.config);
+			if (remember) {
+				if (window.PasswordCredential) {
+					const { id, password } = await navigator.credentials.get({
+						password: true,
+					});
+					this.sign.username = id;
+					this.sign.password = password;
+				} else {
+					const { country_code, username, password } = JSON.parse(
+						localStorage.sign,
+					);
+					this.sign.country_code = country_code;
+					this.sign.username = username;
+					this.sign.password = password;
+				}
+
+				if (autologin) {
+					this.login();
+				}
+			}
+		}
 	},
 };
 </script>
