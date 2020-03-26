@@ -15,6 +15,7 @@ if (isProd()) {
 		banner: `Current version ${
 			pkg.version
 		} and build time ${new Date().toString()}`,
+		test: /\.m?js$/,
 	});
 	plugins.push(banner);
 }
@@ -35,9 +36,9 @@ module.exports = {
 	// css相关配置
 	css: {
 		// 是否使用css分离插件 ExtractTextPlugin
-		extract: isProd(),
+		extract: !isProd(),
 		// 开启 CSS source maps?
-		sourceMap: isProd(),
+		sourceMap: !isProd(),
 	},
 
 	configureWebpack: {
@@ -93,6 +94,11 @@ module.exports = {
 
 	pwa: {
 		name: '雷神加速器',
+		themeColor: '#fcca3c',
+		msTileColor: '#000000',
+		manifestOptions: {
+			background_color: '#fcca3c',
+		},
 	},
 
 	chainWebpack: config => {
@@ -105,7 +111,7 @@ module.exports = {
 	pluginOptions: {
 		svgSprite: {
 			dir: 'src/assets/icons',
-			test: /\.svg$/,
+			test: /\.(svg)(\?.*)?$/,
 			loaderOptions: {
 				extract: true,
 				spriteFilename: 'img/icons.[hash:8].svg', // or 'img/icons.svg' if filenameHashing == false

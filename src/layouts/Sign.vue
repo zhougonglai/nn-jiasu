@@ -1,7 +1,7 @@
 <template lang="pug">
 #sign
 	.box
-		i.el-icon-close.top.right.abs
+		i.el-icon-close.top.right.abs(@click="close")
 		div.logo.mb-2
 			img#logo(src="../assets/img/logo.png" srcset="../assets/img/logo@2x.png 2x" alt="logo")
 		router-view
@@ -12,6 +12,15 @@ import { mapActions } from 'vuex';
 export default {
 	name: 'SignLayout',
 	methods: {
+		close() {
+			if (this.$root.production) {
+				window.NimCefWebInstance.call('CallNativeFun', {
+					message: {
+						operation: 'close',
+					},
+				});
+			}
+		},
 		...mapActions('sign', ['getCountryCodes']),
 	},
 	created() {

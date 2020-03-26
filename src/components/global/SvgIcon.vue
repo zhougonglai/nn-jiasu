@@ -21,8 +21,8 @@ export default {
 
 	computed: {
 		iconPath() {
-			// return require(`@assets/icons/${this.name}.svg`).default;
-			let icon = require(`@assets/icons/${this.name}.svg`);
+			// let icon = () => import(`@assets/icons/${this.name}.svg`);
+			let icon = require(`@/assets/icons/${this.name}.svg`);
 			if (Object.prototype.hasOwnProperty.call(icon, 'default')) {
 				icon = icon.default;
 			}

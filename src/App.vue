@@ -8,6 +8,10 @@
 <script>
 export default {
 	name: 'App',
+	created() {
+		/* eslint-disable */
+		console.log(this.$root.version, this.$root.date);
+	},
 };
 </script>
 <style lang="scss" scoped></style>
