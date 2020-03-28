@@ -1,11 +1,14 @@
 import { unionBy } from 'lodash';
-import Request from '@utils/request';
+import JiaSuService from '@services/jiasu';
+
+const jiasuService = new JiaSuService();
 
 const types = chat => Symbol(`SIGN_${chat}`).toString();
 
 const state = {
 	top_country: [],
 	list_country: [],
+	geoip: {},
 };
 
 const getters = {
@@ -33,11 +36,13 @@ const getters = {
 
 const actions = {
 	async getCountryCodes({ commit }) {
-		const request = new Request('https://jiasu.nn.com/');
-		const { data } = await request.get('geoip2/country_codes.json', {
-			lang: navigator.language,
-		});
+		const { data } = await jiasuService.countryCodes();
 		commit(types('COUNTRY_CODE'), data);
+		return data;
+	},
+	async getGeoip({ commit }) {
+		const { data } = await jiasuService.geoip();
+		commit(types('GEO_IP'), data);
 		return data;
 	},
 };
@@ -46,6 +51,9 @@ const mutations = {
 	[types('COUNTRY_CODE')](state, { top_country, list_country }) {
 		state.top_country = top_country;
 		state.list_country = list_country;
+	},
+	[types('GEO_IP')](state, data) {
+		state.geoip = data;
 	},
 };
 

@@ -12,11 +12,15 @@ export default class SignService {
 	}
 
 	async register(sign) {
-		return await this.request.post('/api/register', sign);
+		return await this.request.post('/api/auth/register', sign);
+	}
+
+	async package(sign) {
+		return await this.request.post('/api/auth/register/package', sign);
 	}
 
 	async smscode(data) {
-		return await this.request.post('/tools/send/smscode', data);
+		return await this.request.post('/tools/smscode', data);
 	}
 
 	async validate(data) {

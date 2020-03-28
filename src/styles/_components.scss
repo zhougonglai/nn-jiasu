@@ -92,8 +92,8 @@ form.form {
 		}
 	}
 	i.form-icon {
-		padding: $n;
-		color: lightgray;
+		margin: 0 $n;
+		color: $icon-color;
 	}
 	svg.form-icon {
 		width: 20px;

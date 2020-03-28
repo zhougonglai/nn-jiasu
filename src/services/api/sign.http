@@ -1,6 +1,6 @@
-@host = http://dev-api1.leigod.com
+@host = http://dev-api1.leigod.com/
 
-POST {{host}}/api/auth/login
+POST {{host}}api/auth/login
 Content-Type: application/json
 
 {
@@ -10,3 +10,12 @@ Content-Type: application/json
   "password": "e10adc3949ba59abbe56e057f20f883e"
 }
 
+###
+
+POST {{host}}api/auth/register/package
+Content-Type: application/json
+
+{
+  "user_type": 0,
+  "region_code": 1
+}

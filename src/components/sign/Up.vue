@@ -6,26 +6,31 @@
 			label(for="phone")
 				svg-icon.form-icon(name="phone")
 			country-code.form-contrl__before(v-model="sign.country_code")
-			input#phone.form-input(type="tel" autocomplete="tel" placeholder="手机号" v-model.number.trim="sign.mobile_num")
+			input#phone.form-input(type="tel" name="phone" autocomplete="tel" placeholder="手机号" v-model.number.trim="sign.phone")
 			i.form-clear.el-icon-error(v-if="sign.mobile_num" @click="sign.mobile_num = ''")
 		.form-contrl.with-after
 			label(for="smscode")
 				svg-icon.form-icon(name="safe")
-			input#smscode.form-input(type="tel" autocomplete="off" placeholder="验证码" v-model.trim="sign.smscode")
+			input#smscode.form-input(type="tel" name="code" autocomplete="off" placeholder="验证码" v-model.trim="sign.smscode")
 			el-button.mr-1(type="text" size="mini" @click="sendContrl" :disabled="!!sendCodeContrl.timer")
 				| {{ sendCodeContrl.timer ? `(${sendCodeContrl.time})` : '发送验证码' }}
 			.verify.pointer(v-if="!verifyed" @click="verify")
 				.bubble
 				| 点击按钮进行验证
-		.form-contrl(v-if="verifyed")
-			label(for="pwd")
-				svg-icon.form-icon(name="lock")
-			input#pwd.form-input(type="password" autocomplete="current-password" placeholder="密码" v-model="sign.password")
-			i.form-clear.el-icon-error(@click="sign.password = ''")
+		template(v-if="verifyed")
+			.form-contrl
+				label(for="pwd")
+					svg-icon.form-icon(name="lock")
+				input#pwd.form-input(type="password" name="pwd" autocomplete="current-password" placeholder="密码" v-model="sign.password")
+				i.form-clear.el-icon-error(@click="sign.password = ''")
+			.form-contrl
+				label(for="refer")
+					i.el-icon-s-ticket.form-icon
+				input#refer.form-input(type="text" name="refer_code" autocomplete='off' placeholder="推荐码(可为空)" v-model="sign.refer_code")
 	.flex.full-width.mt-3
 		el-checkbox(v-model="confirm") 已阅读并同意
 		small.inline-flex.pointer.primary 《用户服务条款》
-	button.mt-1.btn.block 注册
+	button.mt-1.btn.block(@click="register") 注册
 	.flex.align-items-center.justify-content-center.mt-2
 		small.text-lightgray.mr-1 已有账号
 		router-link.text-primary(:to="{name: 'Sign', params: { type: 'in'}}") 去登录
@@ -34,6 +39,7 @@
 import SignService from '@/services/sign';
 import md5 from 'js-md5';
 const signService = new SignService();
+import { mapActions } from 'vuex';
 
 export default {
 	name: 'SignUp',
@@ -52,12 +58,15 @@ export default {
 			},
 			sign: {
 				country_code: 86,
-				mobile_num: '',
+				phone: '',
 				state: 2,
 				password: '',
 				server_status: '',
+				refer_code: '',
 				smscode: '',
 				smscode_key: '',
+				package_id: '',
+				price_id: '',
 			},
 			geetest: {
 				geetest_challenge: '',
@@ -99,11 +108,19 @@ export default {
 			}
 		},
 		async register() {
-			await this.signService.register({
+			const { code, msg } = await signService.register({
+				register_type: this.sign.country_code === 86 ? 1 : 2,
 				...this.sign,
 				password: md5(this.sign.password),
 			});
+			if (code) {
+				this.error.msg = msg;
+				this.error.status = code;
+			} else {
+				this.$router.push({ name: 'Sign', params: { type: 'in' } });
+			}
 		},
+		...mapActions('sign', ['getGeoip']),
 	},
 	async mounted() {
 		const {
@@ -131,8 +148,12 @@ export default {
 			);
 		}
 	},
-	created() {
+	async created() {
 		this.geetester = require('@/utils/gt').default;
+		const { region_code } = await this.getGeoip();
+		const { data } = await signService.package({ region_code, user_type: 0 });
+		this.sign.package_id = data[0].package_id;
+		this.sign.price_id = data[0].price[0].price_id;
 	},
 };
 </script>
