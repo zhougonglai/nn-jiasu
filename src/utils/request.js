@@ -1,17 +1,15 @@
+import 'whatwg-fetch';
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
+
 export default class Request {
 	constructor(baseUrl) {
 		this.baseUrl = baseUrl;
-		this.controller = new AbortController();
 	}
 
 	get(path, params, config) {
-		const { signal } = this.controller;
 		return fetch(
 			this.baseUrl + path + '?' + new URLSearchParams(params).toString(),
-			{
-				signal,
-				...config,
-			},
+			config,
 		).then(this.check);
 	}
 
@@ -23,23 +21,16 @@ export default class Request {
 			headers: {
 				'Content-Type': 'application/json', // application/x-www-form-urlencoded
 			},
-			signal,
 			...config,
 		}).then(this.check);
 	}
 
 	put(path, formData, config) {
-		const { signal } = this.controller;
 		return fetch(this.baseUrl + path, {
 			method: 'PUT',
 			body: formData,
-			signal,
 			...config,
 		}).then(this.check);
-	}
-
-	abort() {
-		return this.controller.abort();
 	}
 
 	transform({ rtnCode, rtnInfo }) {
