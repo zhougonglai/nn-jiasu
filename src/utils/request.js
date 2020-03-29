@@ -14,7 +14,6 @@ export default class Request {
 	}
 
 	post(path, body, config) {
-		const { signal } = this.controller;
 		return fetch(this.baseUrl + path, {
 			method: 'POST',
 			body: JSON.stringify(body),
