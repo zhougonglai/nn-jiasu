@@ -83,13 +83,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import RechargeService from "@services/recharge";
 const rechargeService = new RechargeService();
 import LocalStorageUtil from "@components/recharge/js/LocalStorageUtil";
 const localStorageUtil = new LocalStorageUtil();
-import RechargeUtils from "@components/recharge/js/rechargeUtils";
-const rechargeUtils = new RechargeUtils();
 export default {
   data() {
     return {
@@ -170,8 +168,7 @@ export default {
      * 获取活动详情
      */
     async getActivityDetail() {
-      let token =
-        this.getAccountToken || localStorageUtil.getUserToken();
+      let token = this.getAccountToken || localStorageUtil.getUserToken();
       let params = {
         id: 279,
         type: 1,
@@ -229,6 +226,7 @@ export default {
       };
       this.drwaBackData = await rechargeService.activityDraw(params);
       this.number_of_draws = this.drwaBackData.data.points;
+      console.log(delay_win, delay_lose);
       console.log("点击抽奖返回,:", this.drwaBackData);
       //执行部分
       this.speed = 200; //每次抽奖速度初始化为200

@@ -46,7 +46,7 @@ export class CefFactory {
 
 export class CefWindowsFactory {
   // token 过期处理
-  loginExpire() {
+  loginExpire(message) {
     try {
       window.NimCefWebInstance.call(
         "loginExpire",
@@ -55,11 +55,13 @@ export class CefWindowsFactory {
           console.log(result);
         }
       );
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // 充值成功
-  rechargeSuccess() {
+  rechargeSuccess(message) {
     window.NimCefWebInstance.call(
       "rechargeSuccess",
       { message },

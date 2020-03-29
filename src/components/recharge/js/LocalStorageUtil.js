@@ -55,7 +55,7 @@ export default class LocalStorageUtil {
     localStorage.setItem("account_token", JSON.stringify(token));
     this.setCookie(this.STORAGES_TOKEN, JSON.stringify(token), 2, true);
   }
-  
+
   /**
    * 获取用户的token
    */
@@ -202,7 +202,7 @@ export default class LocalStorageUtil {
    * @param key
    * @param isDomain 是否读取跨域cookie
    */
-  getCookie(key, isDomain = false) {
+  getCookie(key) {
     var arr,
       reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
     if ((arr = document.cookie.match(reg))) {
