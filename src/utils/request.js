@@ -24,6 +24,18 @@ export default class Request {
 		}).then(this.check);
 	}
 
+	// 加密请求: 需要自行加密
+	encrypt(path, body, config) {
+		return fetch(this.baseUrl + path, {
+			method: 'POST',
+			body,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			...config,
+		});
+	}
+
 	put(path, formData, config) {
 		return fetch(this.baseUrl + path, {
 			method: 'PUT',
