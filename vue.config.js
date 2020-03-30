@@ -24,7 +24,7 @@ if (isProd()) {
 	const compression = new CompressionPlugin();
 	const prerender = new PrerenderSPAPlugin({
 		staticDir: resolve('dist'),
-		routes: ['/', '/players', '/recharge'],
+		routes: Object.keys(routes),
 		postProcess(renderedRoute) {
 			renderedRoute.route = renderedRoute.originalRoute;
 			renderedRoute.html = renderedRoute.html.replace(
