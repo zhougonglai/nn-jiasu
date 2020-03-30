@@ -1,0 +1,14 @@
+{
+	"/": {
+		"title": "暂未定"
+	},
+	"/sign/in": {
+		"title": "登录"
+	},
+	"/sign/up": {
+		"title": "注册"
+	},
+	"/speechSound": {
+		"title": "暂未定"
+	}
+}

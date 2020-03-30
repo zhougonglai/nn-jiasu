@@ -2,6 +2,9 @@ const pkg = require('./package');
 const webpack = require('webpack');
 const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
+const routes = require('./routes');
 
 const isProd = () => process.env.NODE_ENV === 'production';
 
@@ -19,7 +22,32 @@ if (isProd()) {
 		test: /\.m?js$/,
 	});
 	const compression = new CompressionPlugin();
-	plugins.push(banner, compression);
+	const prerender = new PrerenderSPAPlugin({
+		staticDir: resolve('dist'),
+		routes: ['/', '/players', '/recharge'],
+		postProcess(renderedRoute) {
+			renderedRoute.route = renderedRoute.originalRoute;
+			renderedRoute.html = renderedRoute.html.replace(
+				/<title>[^<]*<\/title>/i,
+				'<title>' + routes[renderedRoute.route].title + '</title>',
+			);
+			if (renderedRoute.route.endsWith('.html')) {
+				renderedRoute.outputPath = path.join(
+					__dirname,
+					'dist',
+					renderedRoute.route,
+				);
+			}
+
+			return renderedRoute;
+		},
+		renderer: new Renderer({
+			maxConcurrentRoutes: 4,
+			renderAfterDocumentEvent: 'render-event',
+			headless: true,
+		}),
+	});
+	plugins.push(banner, compression, prerender);
 }
 
 module.exports = {
