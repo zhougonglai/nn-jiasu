@@ -1,0 +1,7 @@
+yuewan:
+  component: '@serverless/tencent-website'
+  inputs:
+    code:
+      src: ./dist
+      hook: npm run build
+    region: ap-guangzhou

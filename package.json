@@ -6,7 +6,8 @@
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
-		"i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+		"i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
+		"sls": "sls"
 	},
 	"dependencies": {
 		"abortcontroller-polyfill": "^1.4.0",
@@ -24,6 +25,7 @@
 	},
 	"devDependencies": {
 		"@kazupon/vue-i18n-loader": "^0.3.0",
+		"@serverless/tencent-website": "^1.2.23",
 		"@vue/cli-plugin-babel": "^4.2.0",
 		"@vue/cli-plugin-eslint": "^4.2.0",
 		"@vue/cli-plugin-pwa": "^4.2.0",

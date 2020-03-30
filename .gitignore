@@ -11,6 +11,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 package-lock.json
+yarn.lock
+
+# sls
+.serverless
+.env_temp
 
 # Editor directories and files
 .idea
