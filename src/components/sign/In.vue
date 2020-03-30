@@ -6,7 +6,7 @@
       label(for="phone")
         svg-icon.form-icon(name="phone")
       country-code.form-contrl__before(v-model="sign.country_code")
-      input#phone.form-input(type="tel" placeholder="手机号" v-model.number.trim="sign.username")
+      input#phone.form-input(type="tel" placeholder="手机号" v-model.number.trim="sign.mobile_num")
       i.form-clear.el-icon-error(v-if="sign.username" @click="sign.username = ''")
     .form-contrl
       label(for="pwd")
@@ -19,9 +19,9 @@
     el-checkbox(v-model="autologin") 自动登录
   button.btn.block(@click="login") 登陆
   .flex.full-width
-    router-link.tap(:to="{name:'Sign', params: { type: 'forget_password'}}") 忘记密码
+    router-link.tap(:to="{name:'Sign', params: { type: 'forget_password'}, query: $route.query}") 忘记密码
     .spacer
-    router-link.tap(:to="{name:'Sign', params: { type: 'up'}}") 立即注册
+    router-link.tap(:to="{name:'Sign', params: { type: 'up'}, query: $route.query}") 立即注册
   .flex.justify-content-center.my-2
     small.dropdown-link.text-lightgray(
       @click="showDropdown"
@@ -52,7 +52,7 @@ export default {
 			sign: {
 				country_code: 86,
 				user_type: 0,
-				username: '',
+				mobile_num: '',
 				password: '',
 			},
 			dropdown: 0,
@@ -77,54 +77,54 @@ export default {
 			this.dropdown = 0;
 		},
 		async login() {
-			const { code, msg, data } = await signService.login({
-				...this.sign,
-				username: this.sign.username.toString(),
-				password: md5(this.sign.password),
-			});
-			if (code) {
-				this.error.msg = msg;
-				this.error.status = code;
-			} else {
-				localStorage.config = JSON.stringify({
-					autologin: this.autologin,
-					remember: this.remember,
-				});
-				if (this.remember) {
-					if (window.PasswordCredential) {
-						const { nickname, avatar } = data.user_info;
-						const passwordCredential = await navigator.credentials.create({
-							password: {
-								id: this.sign.username,
-								name: nickname,
-								iconURL: 'https:' + avatar,
-								password: this.sign.password,
-							},
+			if (this.$root.production) {
+				window.NimCefWebInstance.call(
+					'CallNativeFun',
+					{
+						message: {
+							...this.sign,
+							...this.$router.query,
+							mobile_num: this.sign.mobile_num.toString(),
+							password: md5(this.sign.password),
+						},
+					},
+					async (err, result) => {
+						const data = await signService.login(result);
+						localStorage.config = JSON.stringify({
+							autologin: this.autologin,
+							remember: this.remember,
 						});
-						navigator.credentials.store(passwordCredential);
-					} else {
-						localStorage.sign = JSON.stringify(this.sign);
-					}
-				}
-				if (this.$root.production) {
-					const message = {
-						operation: 'afterlogin',
-						data,
-					};
-					window.NimCefWebInstance.call('CallNativeFun', { message }, () => {
-						window.NimCefWebInstance.call('CallNativeFun', {
-							message: {
-								operation: 'close',
-							},
-						});
-					});
-				}
+						if (this.remember) {
+							if (window.PasswordCredential) {
+								const { nickname, avatar } = data.user_info;
+								const passwordCredential = await navigator.credentials.create({
+									password: {
+										id: this.sign.username,
+										name: nickname,
+										iconURL: 'https:' + avatar,
+										password: this.sign.password,
+									},
+								});
+								navigator.credentials.store(passwordCredential);
+							} else {
+								localStorage.sign = JSON.stringify(this.sign);
+							}
+						}
+						if (this.$root.production) {
+							const message = {
+								operation: 'afterlogin',
+								data,
+							};
+							window.NimCefWebInstance.call('CallNativeFun', { message });
+						}
+					},
+				);
 			}
 		},
 	},
 	async created() {
 		if (localStorage.config) {
-			const { autologin, remember } = JSON.parse(localStorage.config);
+			const { remember } = JSON.parse(localStorage.config);
 			if (remember) {
 				if (window.PasswordCredential) {
 					const { id, password } = await navigator.credentials.get({
@@ -139,10 +139,6 @@ export default {
 					this.sign.country_code = country_code;
 					this.sign.username = username;
 					this.sign.password = password;
-				}
-
-				if (autologin) {
-					this.login();
 				}
 			}
 		}
