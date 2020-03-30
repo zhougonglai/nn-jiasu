@@ -116,11 +116,17 @@ module.exports = {
 			test: /\.(svg)(\?.*)?$/,
 			loaderOptions: {
 				extract: true,
-				spriteFilename: 'img/icons.[hash:8].svg', // or 'img/icons.svg' if filenameHashing == false
+				spriteFilename: 'img/icons.[hash:8].svg',
 			},
 			pluginOptions: {
 				plainSprite: true,
 			},
+		},
+		i18n: {
+			locale: 'cn',
+			fallbackLocale: 'cn',
+			localeDir: 'locales',
+			enableInSFC: true,
 		},
 	},
 };
