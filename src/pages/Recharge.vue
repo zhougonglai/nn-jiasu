@@ -262,7 +262,7 @@ export default {
 	},
 	async mounted() {
 		// this.init();
-		console.log('production:===>', this.$root.production);
+		// console.log('production:===>', this.$root.production);
 		await this.AccountToken(this.account_token);
 		// console.log("getter=>account_token:", this.getAccountToken);
 		await this.getUserInfo();
@@ -316,7 +316,7 @@ export default {
 			try {
 				let token =
 					this.getAccountToken || localStorageUtil.getUserToken().account_token;
-				console.log('token:', token);
+				// console.log('token:', token);
 				await this.setAccountToken(token);
 				if (token == '') {
 					this.tokenExpired();
@@ -338,14 +338,14 @@ export default {
 					}
 				}
 			} catch (error) {
-				console.log(error);
+				// console.log(error);
 			}
 		},
 		/**
 		 * 获取用户信息失败
 		 */
 		getUserinfoFail() {
-			console.log('获取用户信息失败');
+			// console.log('获取用户信息失败');
 			this.tokenExpired();
 		},
 		/**
@@ -378,7 +378,7 @@ export default {
 			let token =
 				this.getAccountToken || localStorageUtil.getUserToken().account_token;
 			if (token == '' || token == null || token == undefined) {
-				console.log('请先登录');
+				// console.log('请先登录');
 				return;
 			}
 			// if (this.cdk_input == "" || this.cdk_input.length < 16) {
@@ -468,7 +468,7 @@ export default {
 				// token 过期
 				this.tokenExpired();
 			}
-			console.log('查询订单状态:', this.invoiceData.data);
+			// console.log('查询订单状态:', this.invoiceData.data);
 		},
 		/**
 		 * 支付成功

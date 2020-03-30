@@ -92,7 +92,7 @@ export default {
 			let token =
 				this.getAccountToken || localStorageUtil.getUserToken().account_token;
 			if (token == '' || token == undefined) {
-				console.log('打开登录弹窗||获取token');
+				// console.log('打开登录弹窗||获取token');
 				if (this.$root.production) {
 					let message = {
 						operation: 'test',
@@ -175,7 +175,7 @@ export default {
 			} else {
 				this.getUserDiscountError();
 			}
-			console.log('用户折扣码:', this.discountList);
+			// console.log('用户折扣码:', this.discountList);
 		},
 		/**
 		 * 用户套餐级别
@@ -193,7 +193,7 @@ export default {
 				globalConfig.getWebBaseUrl(),
 			);
 			this.IsLoading(false);
-			console.log('this.region_code:', this.region_code);
+			// console.log('this.region_code:', this.region_code);
 			this.priceList = pacakgeJson[this.region_code + '__' + lang].price;
 			this.priceList.reverse();
 			this.priceList.sort((itemA, itemB) => {
@@ -201,7 +201,7 @@ export default {
 			});
 			this.packageData.price = this.priceList;
 			// console.log("未登录时的套餐信息:", this.priceList);
-			console.log('未登录时的套餐信息:', this.packageData);
+			// console.log('未登录时的套餐信息:', this.packageData);
 		},
 		/**
 		 * 下载配置文件
