@@ -26,8 +26,8 @@
       v-click-outside="hideDropdownIm"
     ) 其他登录方式 >
       .dropdown-menus.top(v-if="dropdown")
-        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'in'}}") 手机号登录
-        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'by_verify'}}") 短信验证登录
+        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'in'}, query: $route.query}") 手机号登录
+        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'by_verify'}, query: $route.query}") 短信验证登录
 </template>
 <script>
 import SignService from '@/services/sign';

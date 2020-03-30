@@ -1,13 +1,20 @@
 @host = http://dev-api1.leigod.com/
 
-POST {{host}}api/auth/login
+POST {{host}}client/login
 Content-Type: application/json
 
 {
+  "lang": "cn",
   "country_code": 86,
   "user_type": 0,
-  "username": "15271871141",
-  "password": "e10adc3949ba59abbe56e057f20f883e"
+  "mobile_num": "15271871141",
+  "password": "e10adc3949ba59abbe56e057f20f883e",
+  "os_type": 3,
+  "client_version": "1.0.0",
+  "hardware_id": "hardware_id",
+  "device_info": "device_info",
+  "region_code": 1,
+  "src_channel": "src_channel"
 }
 
 ###

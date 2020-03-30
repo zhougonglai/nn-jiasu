@@ -14,6 +14,9 @@ export default {
 		forget_password: () => import('@components/sign/ForgetPassword.vue'),
 		by_verify: () => import('@components/sign/Verify.vue'),
 	},
+	mounted() {
+		console.log(this.$route.query);
+	},
 };
 </script>
 <style lang="scss" scoped>

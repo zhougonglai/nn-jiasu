@@ -22,7 +22,7 @@
       i.form-clear.el-icon-error(@click="sign.password = ''")
   button.btn.block.mt-4(@click="reset") 重置密码
   .full-width.text-center.mt-2
-    router-link.tap(:to="{name:'Sign', params: { type: 'in'}}") 返回登录
+    router-link.tap(:to="{name:'Sign', params: { type: 'in'}, query: $route.query}") 返回登录
 </template>
 <script>
 import SignService from '@/services/sign';

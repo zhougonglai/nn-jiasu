@@ -33,7 +33,7 @@
 	button.mt-1.btn.block(@click="register") 注册
 	.flex.align-items-center.justify-content-center.mt-2
 		small.text-lightgray.mr-1 已有账号
-		router-link.text-primary(:to="{name: 'Sign', params: { type: 'in'}}") 去登录
+		router-link.text-primary(:to="{name: 'Sign', params: { type: 'in'}, query: $route.query}") 去登录
 </template>
 <script>
 import SignService from '@/services/sign';

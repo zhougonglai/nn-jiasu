@@ -8,7 +8,7 @@ export default class SignService {
 	}
 
 	async login(sign) {
-		return await this.request.post('/api/auth/login', sign);
+		return await this.request.post('/client/login', sign);
 	}
 
 	async register(sign) {

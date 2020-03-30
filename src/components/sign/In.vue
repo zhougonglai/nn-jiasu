@@ -30,8 +30,8 @@
       v-click-outside="hideDropdownIm"
     ) 其他登录方式 >
       .dropdown-menus.top(v-if="dropdown")
-        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'by_verify'}}") 短信验证登录
-        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'account'}}") NN号/邮箱号登录
+        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'by_verify'}, query: $route.query}") 短信验证登录
+        router-link.dropdown-menu(:to="{name:'Sign', params: { type: 'account'}, query: $route.query}") NN号/邮箱号登录
   Socials
 </template>
 <script>
