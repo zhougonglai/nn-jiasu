@@ -77,10 +77,12 @@ export default {
 			this.dropdown = 0;
 		},
 		async login() {
+			/* eslint-disable no-console */
 			if (this.$root.production) {
 				window.NimCefWebInstance.call(
 					'CallNativeFun',
 					{
+						operation: 'encrypt',
 						message: {
 							...this.sign,
 							...this.$router.query,
@@ -90,6 +92,7 @@ export default {
 					},
 					async (err, result) => {
 						const data = await signService.login(result);
+						console.log('response', data);
 						localStorage.config = JSON.stringify({
 							autologin: this.autologin,
 							remember: this.remember,
@@ -110,13 +113,11 @@ export default {
 								localStorage.sign = JSON.stringify(this.sign);
 							}
 						}
-						if (this.$root.production) {
-							const message = {
-								operation: 'afterlogin',
-								data,
-							};
-							window.NimCefWebInstance.call('CallNativeFun', { message });
-						}
+						const message = {
+							operation: 'afterlogin',
+							data,
+						};
+						window.NimCefWebInstance.call('CallNativeFun', { message });
 					},
 				);
 			}
