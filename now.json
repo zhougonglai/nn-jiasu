@@ -1,7 +1,7 @@
 {
 	"env": {
-		"VUE_APP_BASE": "http://dev-api1.leigod.com",
-		"VUE_APP_NN_API": "http://test-svr.nn.com",
+		"VUE_APP_BASE": "@vue_app_base",
+		"VUE_APP_NN_API": "@vue_app_nn_api",
 		"VUE_APP_NN_NAMESPACE": "",
 		"VUE_APP_JIASU_NAMESPACE": ""
 	}
