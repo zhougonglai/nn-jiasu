@@ -2,8 +2,11 @@ import Request from '@utils/request';
 
 export default class SignService {
 	constructor() {
+		// TODO: env 被服务器ignore了
 		this.request = new Request(
-			process.env.VUE_APP_BASE + process.env.VUE_APP_JIASU_NAMESPACE,
+			process.env.NODE_ENV === 'production'
+				? 'http://dev-api1.leigod.com'
+				: process.env.VUE_APP_NN_API + process.env.VUE_APP_NN_NAMESPACE,
 		);
 	}
 
