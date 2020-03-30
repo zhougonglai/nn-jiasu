@@ -375,10 +375,9 @@ h1 {
       top: -40px;
     }
     .package-wrap-hours {
-      width: 176px;
+      width: 175px;
       height: 66px;
       background: #5a34e4;
-      opacity: 1;
       border-radius: 5px 5px 0px 0px;
       margin: auto;
       h1 {
@@ -386,7 +385,6 @@ h1 {
         font-weight: 400;
         line-height: 66px;
         color: #ffffff;
-        opacity: 1;
         display: flex;
         align-items: center;
         text-align: center;
@@ -430,7 +428,6 @@ h1 {
       line-height: 5px;
       color: #5a34e4;
       &.active {
-        transition: all 0.3s linear;
         box-shadow: 0px 3px 15px rgba(255, 192, 67, 0.5);
         background: linear-gradient(
           151deg,
@@ -443,7 +440,6 @@ h1 {
     &.active {
       //   box-shadow: 0 0 0 1px #f0bd48;
       border: 1px solid rgba(252, 196, 0, 1);
-      transition: all 0.3s linear;
       .package-wrap-hours {
         width: 178px;
         background: linear-gradient(
@@ -451,7 +447,6 @@ h1 {
           rgba(255, 210, 46, 1) 0%,
           rgba(248, 192, 79, 1) 100%
         );
-        transition: all 0.3s linear;
         h1 {
           color: #7a491e;
           margin-top: 0;
@@ -473,15 +468,14 @@ h1 {
     &:hover {
       border: 1px solid rgba(252, 196, 0, 1);
       .package-wrap-hours {
-        transition: all 0.3s linear;
         width: 178px;
+        padding-top: 1px;
         background: linear-gradient(
           151deg,
           rgba(255, 210, 46, 1) 0%,
           rgba(248, 192, 79, 1) 100%
         );
         h1 {
-          transition: all 0.3s linear;
           color: #7a491e;
           margin-top: 0 !important;
         }
