@@ -4,11 +4,11 @@
     .form-contrl
       label(for="username")
         svg-icon.form-icon(name="user")
-      input#username.form-input(type="text" placeholder="NN号/邮箱号" v-model.trim="sign.username")
+      input#username.form-input(type="email" autocomplete="emall" placeholder="NN号/邮箱号" v-model.trim="sign.username")
     .form-contrl
       label(for="pwd")
         svg-icon.form-icon(name="lock")
-      input#pwd.form-input(type="password" placeholder="密码" v-model="sign.password")
+      input#pwd.form-input(type="password" autocomplete="current-password" placeholder="密码" v-model="sign.password")
   .flex.full-width.my-2
     el-checkbox(v-model="remember") 记住我
     .spacer
