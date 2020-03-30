@@ -17,7 +17,9 @@ new Vue({
 			version: pkg.version,
 		};
 	},
-
+	mounted() {
+		document.dispatchEvent(new Event('render-event'));
+	},
 	router,
 	store,
 	i18n,

@@ -47,7 +47,7 @@ if (isProd()) {
 			headless: true,
 		}),
 	});
-	plugins.push(banner, compression, prerender);
+	plugins.push(banner, prerender, compression);
 }
 
 module.exports = {
