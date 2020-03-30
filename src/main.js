@@ -15,7 +15,6 @@ new Vue({
 		return {
 			production: process.env.NODE_ENV === 'production',
 			version: pkg.version,
-			date: new Date().toString(),
 		};
 	},
 

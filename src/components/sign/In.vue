@@ -37,6 +37,7 @@
 <script>
 import SignService from '@services/sign';
 import md5 from 'js-md5';
+import { mapActions } from 'vuex';
 const signService = new SignService();
 
 export default {
@@ -52,6 +53,7 @@ export default {
 			sign: {
 				country_code: 86,
 				user_type: 0,
+				region_code: '',
 				mobile_num: '',
 				password: '',
 			},
@@ -82,15 +84,18 @@ export default {
 				window.NimCefWebInstance.call(
 					'CallNativeFun',
 					{
-						operation: 'encrypt',
 						message: {
-							...this.sign,
-							...this.$router.query,
-							mobile_num: this.sign.mobile_num.toString(),
-							password: md5(this.sign.password),
+							operation: 'encrypt',
+							data: {
+								...this.sign,
+								...this.$route.query,
+								mobile_num: this.sign.mobile_num.toString(),
+								password: md5(this.sign.password),
+							},
 						},
 					},
 					async (err, result) => {
+						console.log('result', result);
 						const data = await signService.login(result);
 						console.log('response', data);
 						localStorage.config = JSON.stringify({
@@ -113,19 +118,21 @@ export default {
 								localStorage.sign = JSON.stringify(this.sign);
 							}
 						}
-						const message = {
-							operation: 'afterlogin',
-							data,
-						};
-						window.NimCefWebInstance.call('CallNativeFun', { message });
+						window.NimCefWebInstance.call('CallNativeFun', {
+							message: {
+								operation: 'afterlogin',
+								data,
+							},
+						});
 					},
 				);
 			}
 		},
+		...mapActions('sign', ['getGeoip']),
 	},
 	async created() {
 		if (localStorage.config) {
-			const { remember } = JSON.parse(localStorage.config);
+			const { autologin, remember } = JSON.parse(localStorage.config);
 			if (remember) {
 				if (window.PasswordCredential) {
 					const { id, password } = await navigator.credentials.get({
@@ -141,8 +148,13 @@ export default {
 					this.sign.username = username;
 					this.sign.password = password;
 				}
+			} else {
+				this.remember = remember;
+				this.autologin = autologin;
 			}
 		}
+		const { region_code } = await this.getGeoip();
+		this.sign.region_code = region_code;
 	},
 };
 </script>

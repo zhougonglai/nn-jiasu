@@ -9,8 +9,8 @@
 export default {
 	name: 'App',
 	created() {
-		/* eslint-disable */
-		console.log(this.$root.version, this.$root.date);
+		/* eslint-disable no-console */
+		console.log(this.$root.version, this.$root.production, process.env);
 	},
 };
 </script>
